@@ -6,7 +6,11 @@ module Rawscsi
       end
 
       def build
-        @response["hits"]["hit"].map {|h| h["fields"].merge({_id: h["id"], _meta: h})}
+        OpenStruct.new(
+          results: @response["hits"]["hit"].map {|h| h["fields"].merge({_id: h["id"]})},
+          found: @response["hits"]["found"],
+          start: @response["hits"]["start"]
+        )
       end
     end
   end
